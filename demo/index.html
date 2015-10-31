@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap.min.js"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
+	
+	
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body ng-app="app">
+	<div style="padding-left:10px" ng-controller="GameCampaignConfigController as ctrl">
+
+	<div class="page-header">
+  		<h1>Game Campaign Configuration
+  			
+  		</h1>
+	</div>
+ 	
+
+ 	
+ 	<div class="row">
+ 		<div class="col-md-3">
+ 			<h2>Configure Template</h2>
+		 	<form>
+		 		<div class="form-group">
+				  <label for="parent">Parent</label>
+				  <select class="form-control" id="parent" ng-model="ctrl.newNode.parent">
+				    <option ng-repeat="p in ctrl.possibleParents">{{p}}</option>
+				  </select>
+				</div>
+		 		<div class="form-group">
+		 			<label for="name">Name</label>
+		 			<input class="form-control" type="text" id="name" ng-model="ctrl.newNode.name"></input>
+		 		</div>
+				<div class="form-group">
+				  <label for="type">Type</label>
+				  <select class="form-control" id="type" ng-model="ctrl.newNode.type">
+				    <option>Object</option>
+				    <option>Text</option>
+				    <option>Number</option>
+				  </select>
+				</div>
+				<button ng-click="ctrl.addNode(ctrl.newNode)" class="btn btn-success">Add on Template</button>
+			</form>
+		</div>
+		<div class="col-md-3">
+ 			<h2>JSON Template Result</h2>
+ 			</br>
+ 			<pre>
+		 		{{ctrl.template | json : spacing}}
+		 	</pre>
+		</div>
+
+		<div class="col-md-3">
+ 			<h2>Campaign Form Result</h2>
+ 			<form>
+			 	<div ng-repeat="child in ctrl.template.children">
+			 		<form-generator child="child" model="ctrl.finalJson" indent="0"></form-generator>
+			 	</div>
+			 	
+		 	</form>
+		</div>
+
+		<div class="col-md-3">
+ 			<h2>Final Json</h2>
+ 			<pre>
+		 		{{ctrl.finalJson | json : spacing}}
+		 	</pre>
+		</div>
+
+	</div>
+
+ 	</div>
+
+	<script type="text/javascript">
+		app = angular.module('app',['ui.bootstrap']);
+		app.controller('GameCampaignConfigController', GameCampaignConfigController);
+		app.directive('formGenerator', function(RecursionHelper) {
+		  return {
+		  	restrict: 'E',
+		  	scope: {
+		  	  indent: '=indent',
+		  	  child: '=child',
+		      model: '=model'
+		    },
+		    //templateUrl: 'form-generator.html',
+		    template: '<div ng-switch="child.type"><div ng-switch-when="Object" ng-init="model[child.name]={}"><h4 style="margin-left:{{indent}}px">{{child.name}}</h4><div ng-repeat="ch in child.children"><form-generator child="ch" model="model[child.name]" indent="indent+20"></form-generator></div></div> <div ng-switch-default> <div class="form-group" style="margin-left:{{indent}}px"> <label for="{{child.name}}">{{child.name}}</label> <input class="form-control" type="text" id="{{child.name}}" ng-model="model[child.name]"></input></div></div></div>',
+		    compile: function(element) {
+            	return RecursionHelper.compile(element);
+        	}
+		  };
+		});
+
+		app.factory('RecursionHelper', ['$compile', function($compile){
+		    return {
+		        /**
+		         * Manually compiles the element, fixing the recursion loop.
+		         * @param element
+		         * @param [link] A post-link function, or an object with function(s) registered via pre and post properties.
+		         * @returns An object containing the linking functions.
+		         */
+		        compile: function(element, link){
+		            // Normalize the link parameter
+		            if(angular.isFunction(link)){
+		                link = { post: link };
+		            }
+
+		            // Break the recursion loop by removing the contents
+		            var contents = element.contents().remove();
+		            var compiledContents;
+		            return {
+		                pre: (link && link.pre) ? link.pre : null,
+		                /**
+		                 * Compiles and re-adds the contents
+		                 */
+		                post: function(scope, element){
+		                    // Compile the contents
+		                    if(!compiledContents){
+		                        compiledContents = $compile(contents);
+		                    }
+		                    // Re-add the compiled contents to the element
+		                    compiledContents(scope, function(clone){
+		                        element.append(clone);
+		                    });
+
+		                    // Call the post-linking function, if any
+		                    if(link && link.post){
+		                        link.post.apply(null, arguments);
+		                    }
+		                }
+		            };
+		        }
+		    };
+		}]);
+
+		function GameCampaignConfigController(){
+
+			this.template = {
+						name:"root",
+						type:"Object",
+						children:[]
+					}
+
+			this.newNode = {
+						parent: "",
+						name: "",
+						type: "",
+						children: []
+					}
+
+			this.finalJson = {};
+
+			this.possibleParents = ["root"];
+
+			this.addNode = function(node){
+				
+				addChildOnParent(node, this.template);
+				
+				if(node.type == "Object"){
+					this.possibleParents.push(node.name);
+				}
+				this.newNode = {
+						parent: "",
+						name: "",
+						type: "",
+						children: []
+					}
+			}
+
+			function addChildOnParent(node, parent){
+				if (node.parent==parent.name){
+					parent.children.push(node);
+				} else {
+					for (var i=0; i < parent.children.length; i++){
+						addChildOnParent(node, parent.children[i]);
+					}
+				}
+			}
+
+		}
+	</script>
+</body>
+
+</html>
