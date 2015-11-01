@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body ng-app="demo">
+	<div style="padding-left:10px" ng-controller="DemoController as ctrl">
+
+	<div class="page-header">
+  		<h1>GenForm - How it works </h1>
+	</div>
+ 	
+ 	<div class="row">
+
+ 		<div class="col-md-3">
+ 			<h2>Configure Template</h2>
+		 	<form>
+		 		<div class="form-group">
+				  <label for="parent">Parent</label>
+				  <select class="form-control" id="parent" ng-model="ctrl.newNode.parent">
+				    <option ng-repeat="p in ctrl.possibleParents">{{p}}</option>
+				  </select>
+				</div>
+		 		<div class="form-group">
+		 			<label for="name">Name</label>
+		 			<input class="form-control" type="text" id="name" ng-model="ctrl.newNode.name"></input>
+		 		</div>
+				<div class="form-group">
+				  <label for="type">Type</label>
+				  <select class="form-control" id="type" ng-model="ctrl.newNode.type">
+				    <option>Object</option>
+				    <option>Text</option>
+				  </select>
+				</div>
+				<button ng-click="ctrl.addNode(ctrl.newNode)" class="btn btn-success">Add on Template</button>
+			</form>
+		</div>
+		
+		<div class="col-md-3">
+ 			<h2>JSON Form Template</h2>
+ 			</br>
+ 			<pre>
+		 		{{ctrl.template | json : spacing}}
+		 	</pre>
+		</div>
+
+		<div class="col-md-3">
+ 			<h2>Generated Form</h2>
+ 			<form>
+			 	<gen-form template="ctrl.template" model="ctrl.finalJson" indent="0"></gen-form>
+		 	</form>
+		</div>
+
+		<div class="col-md-3">
+ 			<h2>Json Form Object</h2>
+ 			<pre>
+		 		{{ctrl.finalJson | json : spacing}}
+		 	</pre>
+		</div>
+
+	</div>
+
+ 	</div>
+
+	<script src="example.js"></script>
+	<script src="../../bower_components/angular-recursion/angular-recursion.min.js"></script>
+	<script src="../../src/gen-form.js"></script>
+	<script src="../../src/gen-form.directive.js"></script>
+</body>
+
+</html>
