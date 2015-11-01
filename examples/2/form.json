@@ -1,0 +1,107 @@
+{
+  "name": "root",
+  "type": "Object",
+  "children": [
+    {
+      "parent": "root",
+      "name": "Person",
+      "type": "Object",
+      "children": [
+        {
+          "parent": "Person",
+          "name": "Name",
+          "type": "Text",
+          "children": []
+        },
+        {
+          "parent": "Person",
+          "name": "Phones",
+          "type": "Object",
+          "children": [
+            {
+              "parent": "Phones",
+              "name": "Cell Phone",
+              "type": "Text",
+              "children": []
+            },
+            {
+              "parent": "Phones",
+              "name": "Work",
+              "type": "Text",
+              "children": []
+            }
+          ]
+        },
+        {
+          "parent": "Person",
+          "name": "Address",
+          "type": "Object",
+          "children": [
+            {
+              "parent": "Address",
+              "name": "City",
+              "type": "Text",
+              "children": []
+            },
+            {
+              "parent": "Address",
+              "name": "Street",
+              "type": "Text",
+              "children": []
+            },
+            {
+              "parent": "Address",
+              "name": "Number",
+              "type": "Text",
+              "children": []
+            }
+          ]
+        },
+        {
+          "parent": "Person",
+          "name": "Parents",
+          "type": "Object",
+          "children": [
+            {
+              "parent": "Parents",
+              "name": "Father Name",
+              "type": "Text",
+              "children": []
+            },
+            {
+              "parent": "Parents",
+              "name": "Mother Name",
+              "type": "Text",
+              "children": []
+            },
+            {
+              "parent": "Parents",
+              "name": "Parents Address",
+              "type": "Object",
+              "children": [
+                {
+                  "parent": "Address",
+                  "name": "City",
+                  "type": "Text",
+                  "children": []
+                },
+                {
+                  "parent": "Address",
+                  "name": "Street",
+                  "type": "Text",
+                  "children": []
+                },
+                {
+                  "parent": "Address",
+                  "name": "Number",
+                  "type": "Text",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
