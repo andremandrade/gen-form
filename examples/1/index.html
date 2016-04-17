@@ -9,7 +9,7 @@
 
 	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="	initial-scale=1">
+    <meta name="viewport" content="initial-scale=1">
 </head>
 
 <body ng-app="demo">
@@ -23,7 +23,7 @@
 	  		<h1>GenForm - How it works </h1>
 		</div>
 
- 		<div class="col-md-5">
+ 		<div class="col-md-6">
  			<h2>Create field</h2>
 		 	<form>
 		 		<div class="form-group">
@@ -67,7 +67,7 @@
 			</form>
 		</div>
 		
-		<div class="col-md-5">
+		<div class="col-md-6">
  			<h2>JSON Form Template</h2>
  			</br>
  			<pre>
@@ -78,15 +78,15 @@
 		</div>
 
 		<div class="row">
-		<div class="col-md-5">
+		<div class="col-md-6">
  			<h2>Generated Form</h2>
  			<form>
 			 	<gen-form template="ctrl.template" model="ctrl.finalJson" indent="0"></gen-form>
 		 	</form>
 		</div>
 
-		<div class="col-md-5">
- 			<h2>Json Form Object</h2>
+		<div class="col-md-6">
+ 			<h2>Json Object</h2>
  			<pre>
 		 		{{ctrl.finalJson | json : spacing}}
 		 	</pre>

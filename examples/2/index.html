@@ -9,7 +9,7 @@
 
 	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1">
 </head>
 
 <body ng-app="demo">
@@ -20,13 +20,13 @@
 	</div>
  	
  	<div class="row">
-		<div class="col-md-4">
+		<div class="col-md-5">
  			<form>
 			 	<gen-form template="template" model="object" indent="0"></gen-form>
 		 	</form>
 		</div>
-		<div class="col-md-3">
-			<h2>Json Form Object</h2>
+		<div class="col-md-5">
+			<h2>Json Object</h2>
 			<pre>
 		 		{{object | json : spacing}}
 		 	</pre>
@@ -39,6 +39,7 @@
 	<script src="../../bower_components/angular-recursion/angular-recursion.min.js"></script>
 	<script src="../../src/gen-form.js"></script>
 	<script src="../../src/gen-form.directive.js"></script>
+	<script src="../../src/gen-field.directive.js"></script>
 	<script src="../../src/gen-form.service.js"></script>
 </body>
 
