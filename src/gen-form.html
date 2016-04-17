@@ -1,23 +1,19 @@
-<div ng-switch="template.type">
-	<div ng-switch-when="Object" ng-init="model[template.name]={}">
-		<div ng-switch="template.name">
-			<div ng-switch-when="root">
-				<div ng-repeat="ch in template.children">
-					<gen-form template="ch" model="model[template.name]" indent="indent"></gen-form>
-				</div>
-			</div>
-			<div ng-switch-default>
-				<h4 style="margin-left:{{indent}}px">{{template.name}}</h4>
-				<div ng-repeat="ch in template.children">
-					<gen-form template="ch" model="model[template.name]" indent="indent+20"></gen-form>
-				</div>
-			</div>
+<div ng-repeat="field in template">
+	<div ng-switch="field.multivalued">
+		<div ng-switch-when="true">
+
 		</div>
-	</div>
-	<div ng-switch-default>
-		<div class="form-group" style="margin-left:{{indent}}px">
-			<label for="{{template.name}}">{{template.name}}</label>
-			<input class="form-control" type="text" id="{{template.name}}" ng-model="model[template.name]"></input>
+		<div ng-switch-default>
+			<div ng-switch="field.type">
+				<div ng-switch-when="object" ng-init="model[field.id]={}">
+					<h4 style="margin-left:{{indent}}px">{{field.label}}</h4>
+					<gen-form template="field.children" model="model[field.id]" indent="indent+20"></gen-form>
+				</div>
+
+				<div ng-switch-default>
+					<gen-field field="field" model="model" indent="indent"></gen-field>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
