@@ -10,5 +10,5 @@ HTML form builder for angular projects
 4. Run `npm install -g bower`
 5. Run `bower install`
 6. Run `npm install -g live-server`
-7. Run `liver-server`
-8. Open your brower on `http://localhost:8080` a access `examples`
+7. Run `live-server`
+8. Open your brower on `http://localhost:8080` and access `examples`
