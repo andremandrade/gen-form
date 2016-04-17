@@ -1,9 +1,86 @@
 [
   {
     "parentId": "",
-    "id": "a",
-    "label": "a",
+    "id": "sexo",
+    "label": "Sexo",
+    "type": "enum",
+    "multivalued": false,
+    "required": false,
+    "children": [],
+    "options": [
+      "M",
+      "F"
+    ]
+  },
+  {
+    "parentId": "",
+    "id": "nome",
+    "label": "Nome",
     "type": "text",
+    "multivalued": false,
+    "required": false,
+    "children": []
+  },
+  {
+    "parentId": "",
+    "id": "telefones",
+    "label": "Telefone",
+    "type": "text",
+    "multivalued": true,
+    "required": false,
+    "children": []
+  },
+  {
+    "parentId": "",
+    "id": "dataNasc",
+    "label": "Data de Nascimento",
+    "type": "date",
+    "multivalued": false,
+    "required": false,
+    "children": []
+  },
+  {
+    "parentId": "",
+    "id": "end",
+    "label": "Endereco",
+    "type": "object",
+    "multivalued": true,
+    "required": false,
+    "children": [
+      {
+        "parentId": "end",
+        "id": "rua",
+        "label": "Rua",
+        "type": "text",
+        "multivalued": false,
+        "required": false,
+        "children": []
+      },
+      {
+        "parentId": "end",
+        "id": "num",
+        "label": "Numero",
+        "type": "number",
+        "multivalued": false,
+        "required": false,
+        "children": []
+      },
+      {
+        "parentId": "end",
+        "id": "cidade",
+        "label": "Cidade",
+        "type": "text",
+        "multivalued": false,
+        "required": false,
+        "children": []
+      }
+    ]
+  },
+  {
+    "parentId": "",
+    "id": "isGerente",
+    "label": "Gerente",
+    "type": "checkbox",
     "multivalued": false,
     "required": false,
     "children": []
