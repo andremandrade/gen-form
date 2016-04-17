@@ -3,36 +3,66 @@ app = angular.module('demo',['RecursionHelper', 'GenForm']);
 
 function DemoController($scope){
 
-	this.template = {
-				name:"root",
-				type:"Object",
-				children:[]
-			}
+	this.template = []
 
 	this.newNode = {
-				parent: "",
-				name: "",
-				type: "",
-				children: []
-			}
+		parentId: '',
+		id: '',
+		label: '',
+		type: '',
+		multivalued: false,
+		required: false,
+		children: []
+	}
+
+	this.possibleParents = [];
 
 	this.finalJson = {};
 
-	this.possibleParents = ["root"];
-
 	this.addNode = function(node){
-		
-		addChildOnParent(node, this.template);
-		
-		if(node.type == "Object"){
-			this.possibleParents.push(node.name);
+		parentIdspl = node.parentId.split('.');
+		if(node.options){
+			node.options = node.options.split(',');
 		}
-		this.newNode = {
-				parent: "",
-				name: "",
-				type: "",
-				children: []
+
+		if(!node.parentId){
+			this.template.push(node);
+			addPossibleParent(node, this.possibleParents);
+		}
+		else{
+			level = this.template;
+			for (var i = 0; i < parentIdspl.length; i++) {
+				nodeParentId = parentIdspl[i];
+				for (var j = 0; j < level.length; j++) {
+					parent = level[j];
+					if (nodeParentId == parent.id){
+						if (i == (parentIdspl.length - 1)) {
+							parent.children.push(node);
+							addPossibleParent(node, this.possibleParents);
+						}
+						else{
+							level = parent.children
+						}
+						break;
+					}
+				}
 			}
+		}
+		
+		this.newNode = {
+			parentId: '',
+			id: '',
+			label: '',
+			type: '',
+			multivalued: false,
+			required: false,
+			children: []
+		}
+	}
+
+	function addPossibleParent(node, possibleParents){
+		if(node.type == 'object')
+			possibleParents.push(node.parentId ? node.parentId + '.' + node.id : node.id);
 	}
 
 	function addChildOnParent(node, parent){

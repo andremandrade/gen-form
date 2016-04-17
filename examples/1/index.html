@@ -9,43 +9,65 @@
 
 	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="	initial-scale=1">
 </head>
 
 <body ng-app="demo">
-	<div style="padding-left:10px" ng-controller="DemoController as ctrl">
+	<div style="padding-left:10px" ng-controller="DemoController as ctrl" class="container">
 
-	<div class="page-header">
-  		<h1>GenForm - How it works </h1>
-	</div>
+	
  	
  	<div class="row">
 
- 		<div class="col-md-3">
- 			<h2>Configure Template</h2>
+	 	<div class="page-header">
+	  		<h1>GenForm - How it works </h1>
+		</div>
+
+ 		<div class="col-md-5">
+ 			<h2>Create field</h2>
 		 	<form>
 		 		<div class="form-group">
-				  <label for="parent">Parent</label>
-				  <select class="form-control" id="parent" ng-model="ctrl.newNode.parent">
+				  <label for="parent">Parent Id</label>
+				  <select class="form-control" id="parentId" ng-model="ctrl.newNode.parentId">
 				    <option ng-repeat="p in ctrl.possibleParents">{{p}}</option>
 				  </select>
 				</div>
 		 		<div class="form-group">
-		 			<label for="name">Name</label>
-		 			<input class="form-control" type="text" id="name" ng-model="ctrl.newNode.name"></input>
+		 			<label for="id">Id</label>
+		 			<input class="form-control" type="text" id="id" ng-model="ctrl.newNode.id"></input>
+		 		</div>
+		 		<div class="form-group">
+		 			<label for="label">Label</label>
+		 			<input class="form-control" type="text" id="label" ng-model="ctrl.newNode.label"></input>
 		 		</div>
 				<div class="form-group">
 				  <label for="type">Type</label>
 				  <select class="form-control" id="type" ng-model="ctrl.newNode.type">
-				    <option>Object</option>
-				    <option>Text</option>
+				    <option value="text">Text</option>
+				    <option value="date">Date</option>
+				    <option value="datetime">Datetime</option>
+				    <option value="number">Integer number</option>
+				    <option value="decimal">Decimal number</option>
+				    <option value="checkbox">Checkbox</option>
+				    <option value="enum">Option</option>
+				    <option value="object">Field set (Object)</option>
 				  </select>
 				</div>
+				<div class="form-group" ng-show="ctrl.newNode.type == 'enum'">
+		 			<label for="options">Values (separate values with ",")</label>
+		 			<input class="form-control" type="text" id="options" ng-model="ctrl.newNode.options"></input>
+		 		</div>
+				
+		 		<input type="checkbox" id="multivalued" ng-model="ctrl.newNode.multivalued"> </input>  <b>Multivalued</b> 
+		 		<br/>
+		 		<input type="checkbox" id="required" ng-model="ctrl.newNode.required"> </input>  <b>Required</b>
+		 		<br/>
+		 		<br/>
 				<button ng-click="ctrl.addNode(ctrl.newNode)" class="btn btn-success">Add on Template</button>
 			</form>
 		</div>
 		
-		<div class="col-md-3">
+		<div class="col-md-5">
  			<h2>JSON Form Template</h2>
  			</br>
  			<pre>
@@ -53,14 +75,17 @@
 		 	</pre>
 		</div>
 
-		<div class="col-md-3">
+		</div>
+
+		<div class="row">
+		<div class="col-md-5">
  			<h2>Generated Form</h2>
  			<form>
 			 	<gen-form template="ctrl.template" model="ctrl.finalJson" indent="0"></gen-form>
 		 	</form>
 		</div>
 
-		<div class="col-md-3">
+		<div class="col-md-5">
  			<h2>Json Form Object</h2>
  			<pre>
 		 		{{ctrl.finalJson | json : spacing}}
@@ -75,6 +100,7 @@
 	<script src="../../bower_components/angular-recursion/angular-recursion.min.js"></script>
 	<script src="../../src/gen-form.js"></script>
 	<script src="../../src/gen-form.directive.js"></script>
+	<script src="../../src/gen-field.directive.js"></script>
 </body>
 
 </html>

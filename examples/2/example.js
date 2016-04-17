@@ -3,13 +3,13 @@ app = angular.module('demo',['RecursionHelper', 'GenForm']);
 
 function DemoController(GenFormLoader, $scope){
 
-	$scope.object={
-		root: {}
-	};
+	$scope.object={};
+	$scope.template=[];
+	
+	$scope.updateTemplate = function(value){
+		$scope.template=value;
+	}
 
-	GenFormLoader.loadTemplate('form.json').then(
-		function(response){
-			$scope.template = response.data;
-		});
+	GenFormLoader.loadTemplate($scope.updateTemplate, 'form.json');
 
 }
