@@ -1,78 +1,75 @@
-app = angular.module('demo',['RecursionHelper', 'GenForm']);
-		app.controller('DemoController', DemoController);
 
-function DemoController($scope){
+app = angular.module('demo', [ 'RecursionHelper', 'GenForm' ]);
 
-	this.template = []
+app.controller('DemoController', function DemoController($scope) {
 
-	this.newNode = {
-		parentId: '',
-		id: '',
-		label: '',
-		type: '',
-		multivalued: false,
-		required: false,
-		children: []
-	}
+  var self = this;
 
-	this.possibleParents = [];
+  self.template = [];
+  self.finalJson = {};
+  self.possibleParents = [''];
 
-	this.finalJson = {};
+  self.addNode = function(node) {
+    var parentIdspl = node.parentId.split('.');
+    if (node.options) {
+      node.options = node.options.split(/\s*\,\s*/);
+    }
 
-	this.addNode = function(node){
-		parentIdspl = node.parentId.split('.');
-		if(node.options){
-			node.options = node.options.split(',');
-		}
+    if (!node.parentId) {
+      self.template.push(node);
+      self.addParent(node);
+    }
+    else {
+      var level = self.template;
+      for (var i=0; i < parentIdspl.length; i++) {
+        var nodeParentId = parentIdspl[i];
+        for (var j=0; j < level.length; j++) {
+          var parent = level[j];
+          if (nodeParentId == parent.id) {
+            if (i == (parentIdspl.length - 1)) {
+              parent.children.push(node);
+              self.addParent(node);
+            }
+            else {
+              level = parent.children;
+            }
+            break;
+          }
+        }
+      }
+    }
 
-		if(!node.parentId){
-			this.template.push(node);
-			addPossibleParent(node, this.possibleParents);
-		}
-		else{
-			level = this.template;
-			for (var i = 0; i < parentIdspl.length; i++) {
-				nodeParentId = parentIdspl[i];
-				for (var j = 0; j < level.length; j++) {
-					parent = level[j];
-					if (nodeParentId == parent.id){
-						if (i == (parentIdspl.length - 1)) {
-							parent.children.push(node);
-							addPossibleParent(node, this.possibleParents);
-						}
-						else{
-							level = parent.children
-						}
-						break;
-					}
-				}
-			}
-		}
-		
-		this.newNode = {
-			parentId: '',
-			id: '',
-			label: '',
-			type: '',
-			multivalued: false,
-			required: false,
-			children: []
-		}
-	}
+    self.createNewNode();
+  };
 
-	function addPossibleParent(node, possibleParents){
-		if(node.type == 'object')
-			possibleParents.push(node.parentId ? node.parentId + '.' + node.id : node.id);
-	}
+  self.addParent = function(node) {
+    if (node.type === 'object') {
+      self.possibleParents.push(node.parentId ? node.parentId + '.' + node.id : node.id);
+    }
+  };
 
-	function addChildOnParent(node, parent){
-		if (node.parent==parent.name){
-			parent.children.push(node);
-		} else {
-			for (var i=0; i < parent.children.length; i++){
-				addChildOnParent(node, parent.children[i]);
-			}
-		}
-	}
+  self.createNewNode = function() {
+    self.newNode = {
+      parentId: '',
+      id: '',
+      label: '',
+      type: 'text',
+      multivalued: false,
+      required: false,
+      children: []
+    };
+  };
 
-}
+  self.createNewNode();
+
+  function addChildOnParent(node, parent) {
+    if (node.parent === parent.name) {
+      parent.children.push(node);
+    }
+    else {
+      for (var i=0; i < parent.children.length; i++) {
+        addChildOnParent(node, parent.children[i]);
+      }
+    }
+  }
+});

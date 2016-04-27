@@ -25,8 +25,8 @@
           <div ng-switch-default ng-init="temp={}">
             <h4 style="margin-left:{{indent}}px">{{field.label}} list</h4>
             <gen-field field="field" model="temp" indent="indent+20"></gen-field>
-            <button ng-click="model[field.id].push(temp[field.id]); temp={}" class="btn btn-success"
-              style="margin-left:{{indent+20}}px">Add New</button>
+            <button ng-click="model[field.id].push(temp[field.id]); temp={}"
+              class="btn btn-success" style="margin-left:{{indent+20}}px">Add new</button>
 
             <table class="table" style="margin-left:{{indent+20}}px">
               <thead>
@@ -36,7 +36,7 @@
               </thead>
               <tbody>
                 <tr ng-repeat="value in model[field.id]">
-                <td>{{value}}</td>
+                  <td>{{value}}</td>
                 </tr>
               </tbody>
             </table>
