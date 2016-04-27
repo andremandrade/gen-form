@@ -1,14 +1,22 @@
-# GenForm - Form Generator for Angular 
+# GenForm
 
-HTML form builder for angular projects
+GenForm helps to generate dynamic HTML forms for projects using AngularJS.
 
-## Running examples
+## Running the application
 
-1. Clone this git the repository
-2. Go to root repository directory
-3. Run `npm install`
-4. Run `npm install -g bower`
-5. Run `bower install`
-6. Run `npm install -g live-server`
-7. Run `live-server`
-8. Open your brower on `http://localhost:8080` and access `examples`
+If you don't have `bower` and `live-server` installed, you need to run the following commands first:
+
+```bash
+npm install -g bower
+npm install -g live-server
+```
+
+After that, go to the root project folder ( `/path/to/gen-form/` ) and run:
+
+```bash
+npm install
+bower install
+live-server
+```
+
+Then open the `http://localhost:8080` URL in your browser and access the folder `examples`.
