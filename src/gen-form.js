@@ -1,1 +1,2 @@
-angular.module('GenForm',['RecursionHelper']);
+
+angular.module('GenForm', [ 'RecursionHelper' ]);
