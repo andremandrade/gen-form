@@ -1,5 +1,5 @@
 var gulp = require("gulp");
-var uglify = require("gulp-uglify");
+var uglify = require('gulp-uglifyjs');
 var rename = require("gulp-rename");
 var karma = require("gulp-karma");
 
@@ -13,11 +13,10 @@ gulp.task("test", ["minify"], function(){
         }));
 });
 
-gulp.task("minify", function(){
-    gulp.src("src/*.js")
-        .pipe(uglify())
-        .pipe(rename("gen-form.min.js"))
-        .pipe(gulp.dest("./"));
+gulp.task("build", function(){
+    gulp.src(["src/*.module.js","src/*.js"])
+        .pipe(uglify("gen-form.min.js"))
+        .pipe(gulp.dest("dist"));
 });
 
 gulp.task("default", ["minify", "test"]);
