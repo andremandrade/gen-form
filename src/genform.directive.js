@@ -1,5 +1,5 @@
 angular.module('GenForm').
-	directive('genForm', function(RecursionHelper) {
+	directive('genForm', ['RecursionHelper',function(RecursionHelper){
 	 	return {
 		  	restrict: 'E',
 		  	scope: {
@@ -13,4 +13,4 @@ angular.module('GenForm').
 	        	return RecursionHelper.compile(element);
 	    	}
 	  	};
-	});
+	}]);

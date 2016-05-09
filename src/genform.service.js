@@ -1,4 +1,4 @@
-angular.module('GenForm').service('GenFormLoader', function($http){
+angular.module('GenForm').service('GenFormLoader', ['$http',function($http){
 	
 	loadTemplate = function(updateTemplate, templateName){
 		return $http.get(templateName).then(function(response){
@@ -9,4 +9,4 @@ angular.module('GenForm').service('GenFormLoader', function($http){
 	return {
 		loadTemplate: loadTemplate
 	}
-});
+}]);
